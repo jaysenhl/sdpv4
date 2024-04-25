@@ -12,7 +12,9 @@
     "vite": "^5.2.0"
   },
   "dependencies": {
+    "@material/web": "^1.4.1",
     "appwrite": "^13.0.1",
+    "bootstrap-icons": "^1.11.3",
     "sweetalert2": "^11.10.8"
   }
 }
