@@ -1,5 +1,6 @@
 import { Client, Query, Databases, ID } from "appwrite";
 import Swal from "sweetalert2";
+import { formattedDate } from "./userInterface";
 
 const client = new Client()
     .setEndpoint(import.meta.env.VITE_APPWRITE_ENDPOINT)
@@ -7,9 +8,6 @@ const client = new Client()
 
 const databases = new Databases(client);
 
-async function clreateClientComponent(){
-    
-}
 
 // comprobar que exista el elemento en el html
 document.addEventListener('DOMContentLoaded', (event)=>{
@@ -22,6 +20,26 @@ document.addEventListener('DOMContentLoaded', (event)=>{
             const email = document.getElementById('emailInput').value;
         
             try{
+                const verifyUser = await databases.listDocuments(
+                    import.meta.env.VITE_APPWRITE_DATABASE_ID,
+                    import.meta.env.VITE_APPWRITE_COLLECTION_ID,
+                    [
+                        Query.equal('telefono', telefono)
+                    ]
+                )
+                if (verifyUser.documents[0].telefono == telefono || verifyUser.documents[0].email == email) {
+                    await Swal.fire({
+                        position: "center",
+                        icon: "error",
+                        title: "CLIENTE CON ESE NÚMERO Y/O EMAIL YA EXISTE!",
+                        showConfirmButton: true,
+                        footer: `Cliente: ${nameInput} - Telefono: ${telefono} - Email: ${email}`
+                    });
+                    document.getElementById('telefonoInput').value = ''
+                    document.getElementById('emailInput').value = ''
+                    console.log(verifyUser.documents[0]);
+                    return
+                }
                 const promise = await databases.createDocument(
                     import.meta.env.VITE_APPWRITE_DATABASE_ID,
                     import.meta.env.VITE_APPWRITE_COLLECTION_ID,
@@ -29,7 +47,8 @@ document.addEventListener('DOMContentLoaded', (event)=>{
                     { 
                         "nombre": nameInput,
                         "telefono": telefono,
-                        "email": email
+                        "email": email,
+                        "cliente_desde": formattedDate
                     }
                 );
                 await Swal.fire({

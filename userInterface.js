@@ -9,7 +9,7 @@ const dateOptions = {
 };
 
 const now = new Date();
-const formattedDate = new Intl.DateTimeFormat('es-ES', dateOptions).format(now);
+export const formattedDate = new Intl.DateTimeFormat('es-ES', dateOptions).format(now);
 if (dateElement) {
   dateElement.textContent = formattedDate;
 }
@@ -30,6 +30,4 @@ function updateTime() {
 }
 
 setInterval(updateTime, 1000);
-
-/* CREATE USER */
 
