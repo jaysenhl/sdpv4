@@ -1,6 +1,6 @@
 import { Client, Query, Databases, ID } from "appwrite";
 import Swal from "sweetalert2";
-import { formattedDate } from "./userInterface";
+import { formattedDate, showLoadingPopup, hideLoadingPopup } from "./userInterface";
 
 const client = new Client()
     .setEndpoint(import.meta.env.VITE_APPWRITE_ENDPOINT)
@@ -15,10 +15,23 @@ document.addEventListener('DOMContentLoaded', (event)=>{
     const createClientBtn = document.getElementById('createClientBtn')
     if(createClientBtn){
         createClientBtn.addEventListener('click',async ()=>{
+
             const nameInput = document.getElementById('nameInput').value;
             const telefono = document.getElementById('telefonoInput').value;
             const email = document.getElementById('emailInput').value;
-        
+
+            showLoadingPopup()
+            
+            if (nameInput === '' || telefono === '' || email === '') {
+                await Swal.fire({
+                    position: "center",
+                    icon: "error",
+                    title: "NO PUEDEN HABER CAMPOS EN BLANCO",
+                    showConfirmButton: true,
+                });
+                return; // Detener la ejecución si hay campos en blanco
+            }
+
             try{
                 const verifyUser = await databases.listDocuments(
                     import.meta.env.VITE_APPWRITE_DATABASE_ID,
@@ -27,19 +40,7 @@ document.addEventListener('DOMContentLoaded', (event)=>{
                         Query.equal('telefono', telefono)
                     ]
                 )
-                if (verifyUser.documents[0].telefono == telefono || verifyUser.documents[0].email == email) {
-                    await Swal.fire({
-                        position: "center",
-                        icon: "error",
-                        title: "CLIENTE CON ESE NÚMERO Y/O EMAIL YA EXISTE!",
-                        showConfirmButton: true,
-                        footer: `Cliente: ${nameInput} - Telefono: ${telefono} - Email: ${email}`
-                    });
-                    document.getElementById('telefonoInput').value = ''
-                    document.getElementById('emailInput').value = ''
-                    console.log(verifyUser.documents[0]);
-                    return
-                }
+                
                 const promise = await databases.createDocument(
                     import.meta.env.VITE_APPWRITE_DATABASE_ID,
                     import.meta.env.VITE_APPWRITE_COLLECTION_ID,
@@ -51,17 +52,10 @@ document.addEventListener('DOMContentLoaded', (event)=>{
                         "cliente_desde": formattedDate
                     }
                 );
-                await Swal.fire({
-                    position: "center",
-                    icon: "success",
-                    title: "CLIENTE CREADO EN SISTEMA!",
-                    showConfirmButton: false,
-                    timer: 1500
-                    });
-                console.log(promise)
-                document.getElementById('nameInput').value = '';
-                document.getElementById('telefonoInput').value = '';
-                document.getElementById('emailInput').value = '';
+                
+                hideLoadingPopup()
+
+                
                 
             }catch(error){
                 console.log(error)

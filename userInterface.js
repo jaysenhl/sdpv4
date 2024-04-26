@@ -31,3 +31,11 @@ function updateTime() {
 
 setInterval(updateTime, 1000);
 
+export function showLoadingPopup() {
+  document.getElementById('loadingPopup').style.display = 'flex';
+}
+
+export function hideLoadingPopup() {
+  document.getElementById('loadingPopup').style.display = 'none';
+}
+
