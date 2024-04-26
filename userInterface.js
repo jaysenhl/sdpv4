@@ -1,8 +1,35 @@
-const dateTimeElement = document.getElementById('date')
-const fecha = new Date(); 
-const opciones = { day: 'numeric', month: 'long', year: 'numeric' };
-const fechaFormateada = new Intl.DateTimeFormat('es-ES', opciones).format(fecha);
+/* DATE TIME */
+const dateElement = document.getElementById('date');
+const timeElement = document.getElementById('time');
 
-if (dateTimeElement) {
-    dateTimeElement.textContent = fechaFormateada;
+const dateOptions = {
+  day: 'numeric',
+  month: 'long',
+  year: 'numeric'
+};
+
+const now = new Date();
+const formattedDate = new Intl.DateTimeFormat('es-ES', dateOptions).format(now);
+if (dateElement) {
+  dateElement.textContent = formattedDate;
 }
+
+const timeOptions = {
+  hour: '2-digit',
+  minute: '2-digit',
+  second: '2-digit',
+  hour12: true 
+};
+
+function updateTime() {
+  const currentTime = new Date();
+  const formattedTime = new Intl.DateTimeFormat('es-ES', timeOptions).format(currentTime);
+  if (timeElement) {
+    timeElement.textContent = formattedTime;
+  }
+}
+
+setInterval(updateTime, 1000);
+
+/* CREATE USER */
+

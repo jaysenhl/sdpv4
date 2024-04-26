@@ -9,7 +9,7 @@ const client = new Client()
 // Initialize Appwrite account service
 const account = new Account(client);
 
-
+const emailInput = document.getElementById()
 
 async function handleLogin(){
     const email = emailInput.value;

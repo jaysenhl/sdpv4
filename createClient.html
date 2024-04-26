@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+  <link rel="stylesheet" href="style.css">
+  <title>SDPV4</title>
+</head>
+<body>
+<div class="createClientComponent">
+    <header>
+        <a href="dashboard.html"><i class="bi bi-arrow-left-square"></i> REGRESAR</a>
+        <h1>CREAR CLIENTE</h1>
+        <h2 id="date"></h2>
+        <h2 id="time"></h2>
+    </header>
+    <section class="inputItems">
+        <div class="inputBox">
+            <label>Nombre</label><br>
+            <input id="nameInput" type="text" placeholder="Aquí...">
+        </div>
+        <div class="inputBox">
+            <label>Teléfono</label><br>
+            <input id="telefonoInput" type="text" placeholder="Aquí...">
+        </div>
+        <div class="inputBox">
+            <label>Email</label><br>
+            <input id="emailInput" type="email" placeholder="Aquí...">
+        </div>
+        <div class="inputBox text-center">
+            <button id="createClientBtn"><i class="bi bi-person-fill-add"></i> CREAR CLIENTE</button><br>
+            <strong class="text-danger">NO DEJAR NADA EN BLANCO</strong>
+        </div>
+    </section>
+</div>
+<script type="module" src="client.js"></script>
+  <script type="module" src="userInterface.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js" integrity="sha384-0pUGZvbkm6XF6gxjEnlmuGrJXVbNuzT9qBBavbLwCsOGabYfZo0T0to5eqruptLy" crossorigin="anonymous"></script>
+</body>
+</html>

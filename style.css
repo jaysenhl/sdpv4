@@ -1,29 +1,109 @@
+@import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Exo+2:ital,wght@0,100..900;1,100..900&family=Imbue:opsz,wght@10..100,100..900&family=Kanit:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=M+PLUS+Rounded+1c&family=Oswald:wght@200..700&family=Oxygen:wght@300;400;700&family=Prompt:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+/* font-family: "Oswald", sans-serif; */
+
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
 }
 
-.dashboardContainer {
-    height: 50vh;
+body {
+    background-color: #31363F;
+    font-family: "Oswald", sans-serif;
+}
+
+.createClientComponent,
+.dashboardComponent {
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+}
+
+header {
+    position: relative;
+    top:0;
+    text-align: center;
+    background-color: #76ABAE;
+    color: white;
+    padding-top:1rem;
+}
+
+h2 {
+    margin-bottom: 0;
+}
+
+#date {
+    margin-bottom: 1rem;
+    color: #222831;
+}
+
+#time {
+    background-color: #222831;
+    padding-bottom: 0;
+    padding: 10px 0;
+}
+
+.dashboardItems {
+    height: 100vh;
+    margin: auto;
     display: flex;
     flex-direction: column;
     justify-content: space-around;
-    align-items: center;
     text-align: center;
 }
 
-i {
-    font-size: 4rem;
-}
-
-.box {
-    height: 30vh;
+.inputItems {
     display: flex;
+    flex-direction: column;
+    height: 60vh;
     align-items: center;
-    justify-content: space-between;
+    justify-content: center;
 }
 
-button {
-    margin-left: 10px;
+.inputBox {
+    margin-top: 1.5rem;
+}
+
+input {
+    font-size: 1.5rem;
+    text-align: center;
+}
+
+label {
+    color:#76ABAE;
+    font-size: 1.5rem;
+}
+
+.item {
+    display: flex;
+    height: 103px;
+    align-items: center;
+    justify-content: center;
+    border: 4px solid #76ABAE;
+    background-color: #EEEEEE;
+    border-radius: 20px;
+    padding: 1rem;
+}
+
+.bi-person-add,
+.bi-search,
+.bi-cash-coin {
+    font-size: 3.5rem;
+}
+
+.bi-person-fill-add {
+    font-size: 2rem;
+}
+
+a {
+    text-decoration: none;
+    font-size: 1.5rem;
+    color: #222831;
+}
+
+#createClientBtn {
+    padding: 15px 40px;
+    background-color: #76ABAE;
+    border:3px solid #EEEEEE;
+    border-radius: 20px;
 }
