@@ -11,17 +11,15 @@ const databases = new Databases(client);
 
 // comprobar que exista el elemento en el html
 document.addEventListener('DOMContentLoaded', (event)=>{
-    // CREATE CLIENT
-    const createClientBtn = document.getElementById('createClientBtn')
-    if(createClientBtn){
-        createClientBtn.addEventListener('click',async ()=>{
+    const createClientBtn = document.getElementById('createClientBtn');
+    if (createClientBtn) {
+        createClientBtn.addEventListener('click', async () => {
 
-            const nameInput = document.getElementById('nameInput').value;
-            const telefono = document.getElementById('telefonoInput').value;
-            const email = document.getElementById('emailInput').value;
+            const nameInput = document.getElementById('nameInput').value.trim();
+            const telefono = document.getElementById('telefonoInput').value.trim();
+            const email = document.getElementById('emailInput').value.trim();
 
-            showLoadingPopup()
-            
+            // Verificar que los campos no estén vacíos antes de mostrar el loading
             if (nameInput === '' || telefono === '' || email === '') {
                 await Swal.fire({
                     position: "center",
@@ -32,42 +30,68 @@ document.addEventListener('DOMContentLoaded', (event)=>{
                 return; // Detener la ejecución si hay campos en blanco
             }
 
-            try{
-                const verifyUser = await databases.listDocuments(
-                    import.meta.env.VITE_APPWRITE_DATABASE_ID,
-                    import.meta.env.VITE_APPWRITE_COLLECTION_ID,
-                    [
-                        Query.equal('telefono', telefono)
-                    ]
-                )
-                
-                const promise = await databases.createDocument(
-                    import.meta.env.VITE_APPWRITE_DATABASE_ID,
-                    import.meta.env.VITE_APPWRITE_COLLECTION_ID,
-                    ID.unique(),
-                    { 
-                        "nombre": nameInput,
-                        "telefono": telefono,
-                        "email": email,
-                        "cliente_desde": formattedDate
-                    }
-                );
-                
-                hideLoadingPopup()
+            showLoadingPopup();
 
-                
-                
-            }catch(error){
-                console.log(error)
+            try {
+                // Verificar si el teléfono o el email ya existen
+                const verifyPhone = await databases.listDocuments(
+                    import.meta.env.VITE_APPWRITE_DATABASE_ID,
+                    import.meta.env.VITE_APPWRITE_COLLECTION_ID,
+                    [Query.equal('telefono', telefono)]
+                );
+
+                const verifyEmail = await databases.listDocuments(
+                    import.meta.env.VITE_APPWRITE_DATABASE_ID,
+                    import.meta.env.VITE_APPWRITE_COLLECTION_ID,
+                    [Query.equal('email', email)]
+                );
+
+                if (verifyPhone.documents.length > 0 || verifyEmail.documents.length > 0) {
+                    // Teléfono o email ya existen, mostrar alerta
+                    hideLoadingPopup();
+                    await Swal.fire({
+                        position: "center",
+                        icon: "error",
+                        title: "CLIENTE CON ESE NÚMERO Y/O EMAIL YA EXISTE!",
+                        showConfirmButton: true,
+                    });
+                } else {
+                    // Ni el teléfono ni el email existen, crear el cliente
+                    const clientCreated = await databases.createDocument(
+                        import.meta.env.VITE_APPWRITE_DATABASE_ID,
+                        import.meta.env.VITE_APPWRITE_COLLECTION_ID,
+                        ID.unique(),
+                        {
+                            "nombre": nameInput,
+                            "telefono": telefono,
+                            "email": email,
+                            "cliente_desde": formattedDate
+                        }
+                    );
+                    hideLoadingPopup();
+                    await Swal.fire({
+                        position: "center",
+                        icon: "success",
+                        title: "CLIENTE CREADO EN SISTEMA!",
+                        showConfirmButton: false,
+                        timer: 1500
+                    });
+                    document.getElementById('nameInput').value = '';
+                    document.getElementById('telefonoInput').value = '';
+                    document.getElementById('emailInput').value = '';
+                }
+            } catch (error) {
+                // Error durante la verificación o creación del cliente
+                hideLoadingPopup();
+                console.error(error);
                 await Swal.fire({
-                position: "center",
-                icon: "error",
-                title: "NO PUEDEN HABER CAMPOS EN BLANCO",
-                showConfirmButton: false,
-                timer: 1500
+                    position: "center",
+                    icon: "error",
+                    title: "ERROR AL PROCESAR LA SOLICITUD",
+                    showConfirmButton: true,
                 });
             }
-        })
+        });
     }
 
     // SEARCH CLIENT LOGIC AND CHANGE USER INTERFACE
