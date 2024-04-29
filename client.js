@@ -1,6 +1,6 @@
 import { Client, Query, Databases, ID } from "appwrite";
 import Swal from "sweetalert2";
-import { formattedDate, showLoadingPopup, hideLoadingPopup } from "./userInterface";
+import { formattedDate, showLoadingPopup, hideLoadingPopup, showClientInfoComponent, hideSearchClientComponent, fillClientInfoCard, fillClientInfoCardShort } from "./userInterface";
 
 const client = new Client()
     .setEndpoint(import.meta.env.VITE_APPWRITE_ENDPOINT)
@@ -8,9 +8,11 @@ const client = new Client()
 
 const databases = new Databases(client);
 
+let actualDocument = null
 
 // comprobar que exista el elemento en el html
 document.addEventListener('DOMContentLoaded', (event)=>{
+    //CREATE CLIENT LOGIC
     const createClientBtn = document.getElementById('createClientBtn');
     if (createClientBtn) {
         createClientBtn.addEventListener('click', async () => {
@@ -27,13 +29,12 @@ document.addEventListener('DOMContentLoaded', (event)=>{
                     title: "NO PUEDEN HABER CAMPOS EN BLANCO",
                     showConfirmButton: true,
                 });
-                return; // Detener la ejecución si hay campos en blanco
+                return;
             }
 
             showLoadingPopup();
 
             try {
-                // Verificar si el teléfono o el email ya existen
                 const verifyPhone = await databases.listDocuments(
                     import.meta.env.VITE_APPWRITE_DATABASE_ID,
                     import.meta.env.VITE_APPWRITE_COLLECTION_ID,
@@ -94,11 +95,26 @@ document.addEventListener('DOMContentLoaded', (event)=>{
         });
     }
 
-    // SEARCH CLIENT LOGIC AND CHANGE USER INTERFACE
+    // SEARCH CLIENT TO VIEW FULL INFO - TODO ADD OTHER ATTRIBUTES HERE AND IN SEARCH.html
     const searchClientBtn = document.getElementById('searchClientBtn')
     if(searchClientBtn){
         searchClientBtn.addEventListener('click',async ()=>{
-            const telefono = document.getElementById('telefonoInput').value 
+
+            const telefono = document.getElementById('telefonoInput').value.trim();
+
+            // Verificar que los campos no estén vacíos antes de mostrar el loading
+            if (telefono === '' ) {
+                await Swal.fire({
+                    position: "center",
+                    icon: "error",
+                    title: "AÑADE EL TELÉFONO!",
+                    showConfirmButton: true,
+                });
+                return;
+            }
+
+            showLoadingPopup();
+
             try {
                 const promise = await databases.listDocuments(
                     import.meta.env.VITE_APPWRITE_DATABASE_ID,
@@ -107,8 +123,9 @@ document.addEventListener('DOMContentLoaded', (event)=>{
                         Query.equal('telefono', telefono)
                     ]
                 );
-            
+            // SI EXISTE UN DOCUMENTO DAMELO
                 if (promise.documents.length > 0) {
+                    hideLoadingPopup();
                     await Swal.fire({
                         position: "center",
                         icon: "success",
@@ -116,9 +133,24 @@ document.addEventListener('DOMContentLoaded', (event)=>{
                         showConfirmButton: false,
                         timer: 1500
                     });
-                    console.log(promise.documents[0]);
-                    document.getElementById('telefonoInput').value = '';
+                    actualDocument = promise.documents[0]
+                    hideSearchClientComponent()
+                    showClientInfoComponent()
+                    fillClientInfoCard(
+                        promise.documents[0].nombre,
+                        promise.documents[0].telefono,
+                        promise.documents[0].email,
+                        promise.documents[0].cliente_desde,
+                        promise.documents[0].total_de_puntos,
+                        promise.documents[0].puntos_disponibles,
+                        promise.documents[0].productos_comprados,
+                        promise.documents[0].productos_reclamados,
+                        promise.documents[0].total_de_visitas,
+                    )
+            
+
                 } else {
+                    hideLoadingPopup();
                     await Swal.fire({
                         position: "center",
                         icon: "error",
@@ -128,6 +160,8 @@ document.addEventListener('DOMContentLoaded', (event)=>{
                     });
                 }
             } catch (error) {
+                hideLoadingPopup()
+                console.log(error)
                 await Swal.fire({
                     position: "center",
                     icon: "error",
@@ -139,6 +173,77 @@ document.addEventListener('DOMContentLoaded', (event)=>{
             }
         })
     }
+
+    // SEARCH CLIENT PARA ATENDER
+    const atenderClientBtn = document.getElementById('atenderClientBtn')
+    if(atenderClientBtn){
+        atenderClientBtn.addEventListener('click',async ()=>{
+
+            const telefono = document.getElementById('telefonoInput').value.trim();
+
+            // Verificar que los campos no estén vacíos antes de mostrar el loading
+            if (telefono === '' ) {
+                await Swal.fire({
+                    position: "center",
+                    icon: "error",
+                    title: "AÑADE EL TELÉFONO!",
+                    showConfirmButton: true,
+                });
+                return;
+            }
+
+            showLoadingPopup();
+
+            try {
+                const promise = await databases.listDocuments(
+                    import.meta.env.VITE_APPWRITE_DATABASE_ID,
+                    import.meta.env.VITE_APPWRITE_COLLECTION_ID,
+                    [
+                        Query.equal('telefono', telefono)
+                    ]
+                );
+            // SI EXISTE UN DOCUMENTO DAMELO
+                if (promise.documents.length > 0) {
+                    hideLoadingPopup();
+                    await Swal.fire({
+                        position: "center",
+                        icon: "success",
+                        title: "CLIENTE EXISTE!",
+                        showConfirmButton: false,
+                        timer: 1500
+                    });
+                    actualDocument = promise.documents[0]
+                    hideSearchClientComponent()
+                    showClientInfoComponent()
+                    fillClientInfoCardShort(
+                        promise.documents[0].nombre,
+                        promise.documents[0].telefono,
+                    )
+
+                } else {
+                    hideLoadingPopup();
+                    await Swal.fire({
+                        position: "center",
+                        icon: "error",
+                        title: "CLIENTE NO EXISTE!",
+                        showConfirmButton: false,
+                        timer: 1500
+                    });
+                }
+            } catch (error) {
+                hideLoadingPopup()
+                console.log(error)
+                await Swal.fire({
+                    position: "center",
+                    icon: "error",
+                    title: "ERROR AL BUSCAR CLIENTE!",
+                    showConfirmButton: false,
+                    timer: 1500
+                });
+                console.log(error);
+            }
+        })
+    }
+
+
 })
-
-

@@ -9,21 +9,96 @@
   <title>SDPV4</title>
 </head>
 <body>
-<div class="container vh-100">
-
-    <a href="dashboard.html"><i class="bi bi-arrow-left-square"> REGRESAR</i></a>
- 
-  
-    <h1>BUSCAR CLIENTE EN SISTEMA</h1>
-    <h2 id="date"></h2>
-
-    <label>Teléfono</label><br>
-    <input id="telefonoInput" type="text" placeholder="Aquí...">
-
-    <button id="searchClientBtn">BUSCAR CLIENTE</button><br>
-    <strong class="text-danger">NO DEJAR NADA EN BLANCO</strong>
+<!--SEARCH CLIENT COMPONENT-->
+<header>
+  <a id="regresarLink" href="dashboard.html"><i class="bi bi-arrow-left-square"></i> REGRESAR</a>
+  <h1><i class="bi bi-search"></i> BUSCAR CLIENTE</h1>
+  <h2 id="date"></h2>
+  <h2 id="time"></h2>
+</header>
+<div class="searchClientComponent">
+    <div class="inputItems">
+      <div class="inputBox">
+        <label>Teléfono</label><br>
+        <input id="telefonoInput" type="text" placeholder="Aquí...">
+      </div>
+      <div class="inputBox">
+        <button id="searchClientBtn">BUSCAR CLIENTE</button><br>
+        <strong class="text-danger">NO DEJAR NADA EN BLANCO</strong>
+      </div>
+    </div>
 </div>
-
+<!--CLIENT INFO COMPONENT-->
+<div class="clientInfoComponent">
+  <div class="clientInfoItems">
+    <div class="infoBox">
+      <h1><i class="bi bi-info-circle text-info text-center"></i> CLIENTE</h1>
+      <h1><i class="bi bi-person-circle"></i> Nombre: <span id="nameElement"></span></h1>
+      <h1><i class="bi bi-telephone"></i> Teléfono: <span id="telefonoElement"></span></h1>
+      <h1><i class="bi bi-envelope-at-fill"></i> Email: <span id="emailElement"></span></h1>
+      <h1><i class="bi bi-calendar2-check-fill"></i> Cliente Desde: <span id="clienteDesdeElement"></span></h1>
+      <h1><i class="bi bi-award"></i> Total De Puntos: <span id="totalDePuntosElement" class="text-danger"></span></h1>
+      <h1><i class="bi bi-award-fill"></i> Puntos Disponibles: <span id="puntosDisponiblesElement" class="text-success"></span></h1>
+      <h1><i class="bi bi-hash"></i> Total De Visitas: <span id="totalDeVisitasElement"></span></h1>
+      <h1><i class="bi bi-hash"></i> Productos Reclamados: <span id="productosReclamadosElement"></span></h1>
+      <h1><i class="bi bi-hash"></i> Productos Comprados: <span id="productosCompradosElement"></span></h1>
+    </div>
+  </div>
+</div>
+<!--LOADING POPUP-->
+<div id="loadingPopup" class="loading-popup" style="display: none;">
+  <div class="loading-content">
+      <div class="spinner-border text-primary" role="status">
+          <span class="sr-only"></span>
+      </div>
+      <h1 class="loadingText">LOADING...</h1>
+  </div>
+</div>
+<!--
+      <thead class="table-dark">
+        <tr>
+          <th colspan="7" class="text-center tableTitle"><i class="bi bi-info-circle text-info"></i> VISITAS</th>
+        </tr>
+        <tr>
+          <th scope="col">#</th>
+          <th scope="col">Fecha</th>
+          <th scope="col">TRANSACCIÓN</th>
+          <th scope="col">PRODUCTO VENDIDO</th>
+          <th scope="col">PUNTOS OBTENIDOS</th>
+          <th scope="col">PRODUCTO RECLAMADO</th>
+          <th scope="col">PUNTOS USADOS</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <th scope="row">1</th>
+          <td>22 ABRIL 2024 5:05 P.M</td>
+          <td>VENTA</td>
+          <td>BATIDA CHOCOLATE</td>
+          <td>10</td>
+          <td>-</td>
+          <td>-</td>
+        </tr>
+        <tr>
+          <th scope="row">2</th>
+          <td>23 ABRIL 2024 9:05 A.M</td>
+          <td>RECLAMO</td>
+          <td>-</td>
+          <td>-</td>
+          <td>MEGA TE</td>
+          <td>20</td>
+        </tr>
+        <tr>
+          <th scope="row">3</th>
+          <td>24 ABRIL 2024 9:05 A.M</td>
+          <td>VENTA</td>
+          <td>BATIDA VAINILLA</td>
+          <td>50</td>
+          <td>-</td>
+          <td>-</td>
+        </tr>
+      </tbody>
+    </table> -->
   <script type="module" src="client.js"></script>
   <script type="module" src="userInterface.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>

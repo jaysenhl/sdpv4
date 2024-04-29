@@ -13,12 +13,23 @@ body {
     font-family: "Oswald", sans-serif;
 }
 
+.searchClientComponent,
 .createClientComponent,
 .dashboardComponent {
     display: flex;
     flex-direction: column;
     height: 100vh;
 }
+
+.infoBox h1:nth-child(1){
+    text-align: center;
+}
+
+.infoBox {
+    background-color: rgb(19, 15, 16);
+    padding: 20px 40px;
+    border-radius: 20px;
+} 
 
 header {
     position: relative;
@@ -27,6 +38,26 @@ header {
     background-color: #76ABAE;
     color: white;
     padding-top:1rem;
+}
+
+.hidden {
+    visibility: hidden;
+    opacity: 0;
+    transition: visibility 0s, opacity 0.5s linear;
+  }
+  
+  .visible {
+    visibility: visible;
+    opacity: 1;
+    transition: visibility 0s linear 0.5s, opacity 0.5s linear;
+  }
+
+.tableTitle {
+    font-size: 2.5rem;
+}
+
+header h1 {
+    padding: 15px 0;
 }
 
 h2 {
@@ -38,10 +69,26 @@ h2 {
     color: #222831;
 }
 
+span {
+    color:#76ABAE;
+}
+
 #time {
     background-color: #222831;
     padding-bottom: 0;
     padding: 10px 0;
+}
+
+.buttonBox {
+    display: flex;
+    justify-content: space-evenly;
+    margin: 20px 0;
+    width: 400px;
+}
+
+#sellBtn,
+#reclaimBtn {
+    padding: 15px 30px;
 }
 
 .dashboardItems {
@@ -51,6 +98,15 @@ h2 {
     flex-direction: column;
     justify-content: space-around;
     text-align: center;
+}
+
+.clientInfoItems {
+    color: #FFFFFF;
+    height: 40vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-around;
 }
 
 .inputItems {
@@ -87,12 +143,14 @@ label {
 }
 
 .bi-person-add,
-.bi-search,
 .bi-cash-coin {
     font-size: 3.5rem;
 }
 
-.bi-person-fill-add {
+.bi-award-fill,
+.bi-person-fill-add,
+.bi-person-circle,
+.bi-search {
     font-size: 2.5rem;
 }
 
@@ -102,6 +160,12 @@ a {
     color: #222831;
 }
 
+.clientInfoComponent {
+    margin-top: 20px;
+}
+
+#atenderClientBtn,
+#searchClientBtn,
 #createClientBtn {
     padding: 10px 20px;
     background-color: #76ABAE;
@@ -139,6 +203,41 @@ strong {
 .sr-only {
     font-size: 4rem;
 }
+
+.productSelection{
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    height: 45vh;
+    align-items: center;
+    background-color: rgb(19, 15, 16);;
+}
+
+.leyendaBox {
+    border: 3px solid #76ABAE;
+}
+
+.productSelection h1 {
+    width: 100%;
+    background-color: #222831;
+    color: #EEEEEE;
+    padding:20px 0;
+}
+
+#confirmTransactionBtn {
+    padding: 20px;
+    font-size: 1.5rem;
+}
+
+select {
+    width: 275px;
+    height: 70px;
+    text-align: center;
+    font-size: 1.7rem;
+    margin:10px 0;
+    border-radius: 10px;
+}
+
 
 @media(min-width: 450px){
     .inputItems {

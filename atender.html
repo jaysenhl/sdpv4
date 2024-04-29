@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+  <link rel="stylesheet" href="style.css">
+  <title>SDPV4</title>
+</head>
+<body>
+<!--SEARCH CLIENT COMPONENT-->
+<header>
+  <a id="regresarLink" href="dashboard.html"><i class="bi bi-arrow-left-square"></i> REGRESAR</a>
+  <h1><i class="bi bi-cash-coin"></i> ATENDER CLIENTE</h1>
+  <h2 id="date"></h2>
+  <h2 id="time"></h2>
+</header>
+<div class="searchClientComponent">
+    <div class="inputItems">
+      <div class="inputBox">
+        <label>Teléfono</label><br>
+        <input id="telefonoInput" type="text" placeholder="Aquí...">
+      </div>
+      <div class="inputBox">
+        <button id="atenderClientBtn">BUSCAR CLIENTE</button><br>
+        <strong class="text-danger">NO DEJAR NADA EN BLANCO</strong>
+      </div>
+    </div>
+</div>
+<!--CLIENT INFO COMPONENT-->
+<div class="clientInfoComponent">
+    <div class="clientInfoItems">
+        <div class="infoBox">
+          <h1><i class="bi bi-info-circle text-info text-center"></i> CLIENTE</h1>
+          <h1><i class="bi bi-person-circle"></i> Nombre: <span id="nameElement"></span></h1>
+          <h1><i class="bi bi-telephone"></i> Teléfono: <span id="telefonoElement"></span></h1>
+          <h1><i class="bi bi-award-fill"></i> Puntos Disponibles: <span id="puntosDisponiblesElement" class="text-success"></span></h1>
+        </div>
+    </div>
+  <div class="productSelection">
+    <h1>REGISTRA O RECLAMA UN PRODUCTO</h1>
+    <select id="productSelect">
+      <option selected>PRODUCTOS</option>
+      <option value="10">Batida Chocolate</option>
+      <option value="20">Batida Vainilla</option>
+      <option value="30">Batida Chocolate Chip</option>
+      <option value="40">Mega Te</option>
+      <option value="50">Te Verde</option>
+    </select>
+    <div class="buttonBox">
+      <button id="registerProductBtn" class="btn btn-success">REGISTRAR</button>
+      <button id="reclaimProductBtn" class="btn btn-danger">RECLAMAR</button>
+    </div>
+  </div>
+</div>
+<!--LOADING POPUP-->
+<div id="loadingPopup" class="loading-popup" style="display: none;">
+  <div class="loading-content">
+      <div class="spinner-border text-primary" role="status">
+          <span class="sr-only"></span>
+      </div>
+      <h1 class="loadingText">LOADING...</h1>
+  </div>
+</div>
+
+  <script type="module" src="client.js"></script>
+  <script type="module" src="userInterface.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js" integrity="sha384-0pUGZvbkm6XF6gxjEnlmuGrJXVbNuzT9qBBavbLwCsOGabYfZo0T0to5eqruptLy" crossorigin="anonymous"></script>
+</body>
+</html>
